@@ -7,7 +7,7 @@ from app.schemas import TodoBase, TodoResponse
 
 router = APIRouter()
 
-DATABASE_URL = "sql_app.db"
+DATABASE_URL = "app/sql_app.db"
 
 
 def get_db():
