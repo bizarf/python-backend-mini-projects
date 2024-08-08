@@ -1,19 +1,11 @@
-import sqlite3
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 
 from app.schemas import TodoBase, TodoResponse
+from app.utils.config import get_db
 
 router = APIRouter()
-
-DATABASE_URL = "app/sql_app.db"
-
-
-def get_db():
-    conn = sqlite3.connect(DATABASE_URL)
-    conn.row_factory = sqlite3.Row  # To get dictionary-like row objects
-    return conn
 
 
 @router.get("/todos", response_model=List[TodoResponse])
