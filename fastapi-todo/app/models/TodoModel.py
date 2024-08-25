@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String
 # this would be used if i had more than one table which had a relation with another table. needed for primary and foreign keys
 from sqlalchemy.orm import relationship
 
-from .database import Base
+from app.database import Base
 
 
 # make a class to define the table

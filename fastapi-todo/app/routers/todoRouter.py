@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from .database import get_db
-from .models import Todo
-from .schemas import TodoBase
+from app.database import get_db
+from app.models.TodoModel import Todo
+from app.schemas.todoSchemas import TodoBase
 
 # groups all of the path operations into one. this is for use in the main.py file
 router = APIRouter()
@@ -27,6 +27,30 @@ def post_todo(request: TodoBase, db: Session = Depends(get_db)):
     # declare a variable with the table model.
     todo = Todo(title=request.title, description=request.description)
     db.add(todo)
+    db.commit()
+    db.refresh(todo)
+    return todo
+
+
+@router.delete("/{id}")
+def delete_todo(id: int, db: Session = Depends(get_db)):
+    todo = db.query(Todo).filter(Todo.id == id).first()
+
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    db.delete(todo)
+    db.commit()
+
+    return {"message": "Todo deleted successfully"}
+
+
+@router.put("/{id}")
+def update_todo(id: int, request: TodoBase, db: Session = Depends(get_db)):
+    todo = db.query(Todo).filter(Todo.id == id).first()
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    todo.title = request.title
+    todo.description = request.description
     db.commit()
     db.refresh(todo)
     return todo
