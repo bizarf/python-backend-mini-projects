@@ -15,7 +15,7 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/api")
 def root():
     return {"message": "Welcome to the API"}
 

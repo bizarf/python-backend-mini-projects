@@ -5,6 +5,6 @@ DATABASE_URL = "app/sql_app.db"
 
 def get_db():
     conn = sqlite3.connect(DATABASE_URL)
-    # gets a dictionary-like row of objects
+    # returns fetchOne() and fetchAll() data as dicts
     conn.row_factory = sqlite3.Row
     return conn

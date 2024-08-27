@@ -24,16 +24,22 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. From the root of the project, you'll need to run this command:
+4. Now create a file called ".env" at the root of the project and inside the file add:
+
+```
+JWT_SECRET_KEY="(generate with command: openssl rand -hex 32)"
+```
+
+5. From the root of the project, you'll need to run this command:
 
 ```
 python app/setup_db.py
 ```
 
-5. Once that is done, you can run the server with this command:
+6. Once that is done, you can run the server with this command:
 
 ```
-uvicorn app.main:app
+python app.py
 
 ```
 
